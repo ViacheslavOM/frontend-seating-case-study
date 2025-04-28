@@ -10,6 +10,7 @@ import {
 export const useApp = () => {
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
   const [cart, setCart] = useState<string[]>([]);
+  const [loadingCreateOrder, setLoadingCreateOrder] = useState(false);
 
   const {
     data: eventData,
@@ -125,5 +126,7 @@ export const useApp = () => {
     seatsError,
     isSeatInCart,
     clearCart,
+    setLoadingCreateOrder,
+    loadingCreateOrder,
   };
 };

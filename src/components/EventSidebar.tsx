@@ -44,9 +44,15 @@ export function EventSidebar({
   };
 
   return (
-    <aside className="w-full max-w-sm bg-white rounded-md shadow-sm p-3 flex flex-col gap-2">
-      <div className="bg-zinc-100 rounded-md">
-        <img src={headerImageUrl} alt={place} />
+    <aside className="w-full md:max-w-sm bg-white rounded-md shadow-sm p-3 flex flex-col gap-2">
+      <div className="w-full bg-zinc-100 rounded-md overflow-hidden">
+        {headerImageUrl && (
+          <img
+            src={headerImageUrl}
+            alt={place}
+            className="w-full h-auto object-cover"
+          />
+        )}
       </div>
       <h1 className="text-xl text-zinc-900 font-semibold">{namePub}</h1>
       <p className="text-sm text-zinc-500">{description}</p>

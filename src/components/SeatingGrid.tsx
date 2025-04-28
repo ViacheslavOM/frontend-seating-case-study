@@ -27,7 +27,7 @@ export function SeatingGrid({
 
   if (isFetching) {
     return (
-      <div className="flex flex-col grow items-center justify-center p-4 text-center">
+      <div className="flex flex-col grow items-center justify-center p-4 text-center w-full">
         <Spinner />
       </div>
     );
@@ -79,8 +79,7 @@ export function SeatingGrid({
   };
 
   return (
-    <div className="bg-white rounded-md grow flex flex-col p-3 shadow-sm overflow-auto">
-      {/* Stage */}
+    <div className="bg-white rounded-md w-full grow flex flex-col p-3 shadow-sm overflow-auto">
       <div className="flex items-center gap-2 mb-10">
         <div className="w-8 shrink-0" />
         <div className="flex-1 rounded py-2 bg-zinc-200 bg-opacity-60">
@@ -90,13 +89,11 @@ export function SeatingGrid({
         </div>
       </div>
 
-      {/* Seats */}
       {seatRows.map(renderSeatRow)}
 
-      {/* Legend */}
       <div className="mt-6 p-4 bg-zinc-100 rounded-md shadow-sm">
         <h4 className="text-lg font-semibold text-zinc-600">Seat Type</h4>
-        <div className="flex gap-4 mt-2">
+        <div className="flex gap-4 mt-2 flex-wrap">
           {[
             { color: "bg-yellow-500", label: "VIP" },
             { color: "bg-zinc-200", label: "Regular" },

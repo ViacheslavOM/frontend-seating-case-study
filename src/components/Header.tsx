@@ -21,6 +21,7 @@ interface HeaderProps {
   loggedInUser: User | null;
   onLogin: (email: string, password: string) => Promise<void>;
   loginData?: Login;
+  fetchingCreateLogin: boolean;
 }
 
 export function Header({
@@ -31,6 +32,7 @@ export function Header({
   loggedInUser,
   onLogin,
   loginData,
+  fetchingCreateLogin,
 }: Readonly<HeaderProps>) {
   const [isBasketModalOpen, setIsBasketModalOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -57,7 +59,7 @@ export function Header({
   };
 
   return (
-    <nav className="sticky top-0 left-0 right-0 bg-white border-b border-zinc-200 flex justify-center">
+    <nav className="sticky top-0 left-0 right-0 bg-white border-b border-zinc-200 flex justify-center z-10">
       {isBasketModalOpen && (
         <BasketModal
           tickets={tickets}
@@ -76,23 +78,27 @@ export function Header({
         <SignInModal
           onClose={() => setIsSignInModalOpen(false)}
           onSignIn={handleSignIn}
+          fetchingCreateLogin={fetchingCreateLogin}
         />
       )}
-      <div className="max-w-screen-lg p-4 grow flex items-center justify-between gap-3">
-        <div className="max-w-[250px] w-full flex size-10">
-          <img src={avatarImage} alt="author" />
+
+      <div className="max-w-screen-lg w-full p-4 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-2 w-auto shrink-0">
+          <img src={avatarImage} alt="author" className="h-10 object-cover" />
         </div>
 
-        <div className="flex justify-center">Viacheslav Omelnyk {namePub}</div>
+        <div className="text-center flex-1 text-sm md:text-base font-semibold text-zinc-700 truncate">
+          Viacheslav Omelnyk {namePub}
+        </div>
 
-        <div className="max-w-[250px] w-full flex justify-end items-center gap-3">
-          <div className="relative flex items-center gap-2">
+        <div className="flex items-center gap-3 w-auto shrink-0">
+          <div className="relative">
             <button
-              className="text-xl p-1 rounded-full hover:bg-zinc-100 active:bg-zinc-200 focus:outline-none"
+              className="text-xl p-2 rounded-full hover:bg-zinc-100 active:bg-zinc-200 focus:outline-none"
               onClick={openBasketModal}>
               <FaShoppingBasket />
               {ticketCount > 0 && (
-                <div className="absolute top-0 right-0 w-4 h-4 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">
+                <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">
                   {ticketCount}
                 </div>
               )}
@@ -110,14 +116,14 @@ export function Header({
                 <span className="text-sm font-medium">
                   {loginData?.user.firstName ?? loggedInUser?.firstName}
                 </span>
-                <span className="text-xs text-zinc-500">
+                <span className="text-xs text-zinc-500 truncate max-w-[100px]">
                   {loginData?.user.email ?? loggedInUser?.email}
                 </span>
               </div>
             </div>
           ) : (
             <button
-              className="p-2 rounded bg-blue-500 text-white hover:bg-blue-600"
+              className="px-3 py-1 text-sm rounded bg-blue-500 text-white hover:bg-blue-600"
               onClick={openAuthModal}>
               Sign In
             </button>

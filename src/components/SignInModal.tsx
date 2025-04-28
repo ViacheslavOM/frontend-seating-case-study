@@ -5,9 +5,14 @@ import { validateEmail } from "@/shared/utils";
 interface SignInModalProps {
   onClose: () => void;
   onSignIn: (email: string, password: string) => void;
+  fetchingCreateLogin: boolean;
 }
 
-export function SignInModal({ onClose, onSignIn }: Readonly<SignInModalProps>) {
+export function SignInModal({
+  onClose,
+  onSignIn,
+  fetchingCreateLogin,
+}: Readonly<SignInModalProps>) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
@@ -74,7 +79,9 @@ export function SignInModal({ onClose, onSignIn }: Readonly<SignInModalProps>) {
             )}
           </div>
           <div className="flex gap-2">
-            <Button onClick={handleSubmit}>Sign In</Button>
+            <Button onClick={handleSubmit} disabled={fetchingCreateLogin}>
+              Sign In
+            </Button>
             <Button variant="ghost" onClick={onClose}>
               Cancel
             </Button>

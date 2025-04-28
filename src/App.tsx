@@ -5,9 +5,9 @@ import { BottomCart } from "@/components/BottomCart";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { Spinner } from "./components/Spinner";
 import { Toaster } from "react-hot-toast";
+import { useApp } from "./useApp";
 
 import "./App.css";
-import { useApp } from "./useApp";
 
 function App() {
   const {
@@ -27,6 +27,8 @@ function App() {
     seatsError,
     isSeatInCart,
     clearCart,
+    setLoadingCreateOrder,
+    loadingCreateOrder,
   } = useApp();
 
   if (eventError || seatsError) {
@@ -64,12 +66,13 @@ function App() {
           loggedInUser={loggedInUser}
           onLogin={handleLogin}
           loginData={loginState.data}
+          fetchingCreateLogin={loginState.isLoading}
         />
         <main className="grow flex flex-col justify-center">
-          <div className="max-w-screen-lg m-auto p-4 flex items-start grow gap-3 w-full">
+          <div className="max-w-screen-lg mx-auto p-4 flex flex-col md:flex-row items-start grow gap-4 w-full">
             <SeatingGrid
               seatsData={seatsData}
-              isFetching={isFetchingSeats}
+              isFetching={isFetchingSeats || loadingCreateOrder}
               onAddToBasket={handleAddToCart}
               onRemoveFromBasket={handleRemoveFromCart}
               isSeatInCart={isSeatInCart}
@@ -92,6 +95,8 @@ function App() {
           onOrderSuccess={clearCart}
           loggedInUser={loggedInUser}
           onLogin={handleLogin}
+          setLoadingCreateOrder={setLoadingCreateOrder}
+          fetchingCreateLogin={loginState.isLoading}
         />
       </div>
     </>

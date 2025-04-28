@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AuthModal } from "./AuthModal";
 import { SignInModal } from "./SignInModal";
 import { ProceedAsGuestModal } from "./ProceedAsGuestModal";
@@ -21,6 +21,8 @@ interface BottomCartProps {
   onOrderSuccess: () => void;
   loggedInUser: User | null;
   onLogin: (email: string, password: string) => Promise<void>;
+  setLoadingCreateOrder: (value: boolean) => void;
+  fetchingCreateLogin: boolean;
 }
 
 export function BottomCart({
@@ -31,6 +33,8 @@ export function BottomCart({
   onOrderSuccess,
   loggedInUser,
   onLogin,
+  setLoadingCreateOrder,
+  fetchingCreateLogin,
 }: Readonly<BottomCartProps>) {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showSignInModal, setShowSignInModal] = useState(false);
@@ -87,6 +91,10 @@ export function BottomCart({
     }
   };
 
+  useEffect(() => {
+    setLoadingCreateOrder(isLoading);
+  }, [isLoading, setLoadingCreateOrder]);
+
   return (
     <>
       {showAuthModal && (
@@ -107,6 +115,7 @@ export function BottomCart({
         <SignInModal
           onClose={() => setShowSignInModal(false)}
           onSignIn={handleSignIn}
+          fetchingCreateLogin={fetchingCreateLogin}
         />
       )}
       {showGuestModal && (
